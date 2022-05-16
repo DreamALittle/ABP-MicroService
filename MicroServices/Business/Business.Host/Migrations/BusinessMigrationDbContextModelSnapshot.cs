@@ -19,7 +19,7 @@ namespace Business.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -524,6 +524,9 @@ namespace Business.Migrations
                     b.Property<string>("Regx")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Span")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
@@ -532,7 +535,7 @@ namespace Business.Migrations
                     b.ToTable("base_form_fields", (string)null);
                 });
 
-            modelBuilder.Entity("XCZ.WrokFlow.FormWorkFlow", b =>
+            modelBuilder.Entity("XCZ.WorkFlow.FormWorkFlow", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

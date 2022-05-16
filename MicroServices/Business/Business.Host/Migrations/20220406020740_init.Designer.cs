@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Business.Migrations
 {
     [DbContext(typeof(BusinessMigrationDbContext))]
-    [Migration("20220216085802_init")]
+    [Migration("20220406020740_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace Business.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -312,8 +312,9 @@ namespace Business.Migrations
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
 
-                    b.Property<Guid>("Condition")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Condition")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Content")
                         .HasMaxLength(1000)
@@ -326,8 +327,19 @@ namespace Business.Migrations
                     b.Property<Guid>("FieldId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("FieldName")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("FieldType")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<Guid>("FlowLineId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("IntContent")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -514,6 +526,9 @@ namespace Business.Migrations
                     b.Property<string>("Regx")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Span")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
@@ -522,7 +537,7 @@ namespace Business.Migrations
                     b.ToTable("base_form_fields", (string)null);
                 });
 
-            modelBuilder.Entity("XCZ.WrokFlow.FormWorkFlow", b =>
+            modelBuilder.Entity("XCZ.WorkFlow.FormWorkFlow", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -569,8 +584,10 @@ namespace Business.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<Guid?>("NodeId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("NodeId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
@@ -584,6 +601,8 @@ namespace Business.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EntityId");
+
+                    b.HasIndex("NodeId");
 
                     b.ToTable("base_form_workflow", (string)null);
                 });
